@@ -1,11 +1,8 @@
 <header class="sticky top-0 z-[200] bg-deep shadow-[0_4px_20px_rgba(0,0,0,0.22)]">
     <div class="max-w-[1280px] mx-auto px-8 py-5 flex items-center justify-between gap-5 flex-wrap box-border">
-        <a href="?r=home" class="flex items-center gap-4 no-underline">
-            <span class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-[linear-gradient(135deg,theme(colors.harbor),theme(colors.ember))] text-white font-display font-bold text-lg tracking-tight shadow-[0_4px_12px_rgba(0,0,0,0.3)]">SP</span>
-            <span class="flex flex-col">
-                <span class="font-display text-[22px] font-semibold text-white leading-tight tracking-tight">Sistem Pakar</span>
-                <span class="font-mono text-[10.5px] text-[#8ba3b5] tracking-[1px] uppercase">Depresi Sandwich Generation &middot; Certainty Factor</span>
-            </span>
+        <a href="?r=home" class="flex flex-col no-underline">
+            <span class="font-display text-[22px] font-semibold text-white leading-tight tracking-tight">Sistem Pakar</span>
+            <span class="font-mono text-[10.5px] text-[#8ba3b5] tracking-[1px] uppercase">Depresi Sandwich Generation &middot; Certainty Factor</span>
         </a>
 
         <?php

@@ -96,7 +96,15 @@
   /* Form controls — utility register, so grotesque for legibility at small sizes */
   input[type="text"], input[type="password"], input[type="number"], input[type="file"],
   select, textarea, .form-control {
-    @apply border border-line bg-mist/50 rounded-lg font-display text-ink;
+    @apply border border-line bg-mist/50 rounded-lg font-display text-ink leading-normal;
+  }
+  /* Selects: Bootstrap memaksa height:34px yang meng-clip descender (huruf "y").
+     Paksa height:auto agar tinggi mengikuti padding + line-height. */
+  select.form-control,
+  input.form-control,
+  textarea.form-control {
+    height: auto;
+    line-height: 1.5;
   }
   .form-control:focus { @apply border-harbor bg-white; }
 

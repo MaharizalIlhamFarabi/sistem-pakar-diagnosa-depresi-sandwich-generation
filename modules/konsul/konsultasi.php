@@ -110,13 +110,14 @@ $rm = mysqli_fetch_array($sqlm);
             Apakah Anda merasa <span class="font-semibold text-ink"><?php echo $row['nama_gejala']?></span>?
           </td>
           <td class="px-5 py-5">
+            <?php $cf_default = ""; // TESTING: nilai default terpilih agar form cepat diisi. Set "" untuk produksi. ?>
             <select name="cf<?php echo $no?>" class="form-control w-full px-4 py-3 text-[15px] rounded-lg cursor-pointer">
-              <option value="">-- Pilih Nilai Keyakinan --</option>
-              <option value="1">Sangat Yakin (1)</option>
-              <option value="0.8">Yakin (0,8)</option>
-              <option value="0.6">Cukup Yakin (0,6)</option>
-              <option value="0.4">Sedikit Yakin (0,4)</option>
-              <option value="0.1">Tidak Yakin (0,1)</option>
+              <option value="" <?php echo $cf_default === "" ? "selected" : ""; ?>>-- Pilih Nilai Keyakinan --</option>
+              <option value="1" <?php echo $cf_default === "1" ? "selected" : ""; ?>>Sangat Yakin (1)</option>
+              <option value="0.8" <?php echo $cf_default === "0.8" ? "selected" : ""; ?>>Yakin (0,8)</option>
+              <option value="0.6" <?php echo $cf_default === "0.6" ? "selected" : ""; ?>>Cukup Yakin (0,6)</option>
+              <option value="0.4" <?php echo $cf_default === "0.4" ? "selected" : ""; ?>>Sedikit Yakin (0,4)</option>
+              <option value="0.1" <?php echo $cf_default === "0.1" ? "selected" : ""; ?>>Tidak Yakin (0,1)</option>
             </select>
           </td>
           <input type="hidden" name="nama<?php echo $no?>" value="<?php echo $row['nama_gejala']?>" />
