@@ -8,46 +8,51 @@ $idmember = $rm['id_member'];
 $no_konsul = $_GET['no_konsul'];
 ?>
 
-<center style="font-family: GreyscaleBasic; font-weight: bold;">
-    <font size="6" color="black">Hasil Konsultasi</font>
+<div>
+    <span class="eyebrow">Hasil Konsultasi</span>
+    <h1 class="font-display text-[28px] font-semibold text-ink mt-0 mb-4 leading-[1.2] tracking-tight">Ringkasan diagnosa Anda</h1>
+    <div class="cf-scale"></div>
+</div>
 
-    <div class="panel panel-default">
-        <div align="center">
-            <?php
-            // Untuk mengambil nama dari gejala dari tabel konsultasi
-            $strsqlku = "SELECT * FROM konsultasi WHERE id_member = $rm[id_member] AND no_konsul = $no_konsul";
-            $hasil = mysqli_query($con, $strsqlku);
-            $no = 1;
-            ?>
+<?php
+$strsqlku = "SELECT * FROM konsultasi WHERE id_member = $rm[id_member] AND no_konsul = $no_konsul";
+$hasil = mysqli_query($con, $strsqlku);
+$no = 1;
+?>
 
-            <p></p>
-            <table class="table table-hover table-sm table-bordered" width="100%" border="1" align="center">
-                <tr>
-                    <td colspan="3" align="center" bgcolor="#CCCCCC"><strong> Gejala Yang Anda Miliki Adalah :</strong></td>
+<div class="mt-10 mb-8">
+    <h2 class="font-display text-[16px] font-semibold text-ink mb-4 flex items-center gap-2"><i data-lucide="clipboard-check" class="w-5 h-5 text-harbor"></i> Gejala yang Anda laporkan</h2>
+    <div class="overflow-hidden rounded-2xl border border-line shadow-[0_10px_30px_rgba(15,27,39,0.06)]">
+        <table class="w-full border-collapse text-left">
+            <thead>
+                <tr class="bg-harbor text-white font-display">
+                    <th class="text-center font-semibold uppercase tracking-wide text-[12px] px-4 py-3 w-12">No</th>
+                    <th class="text-center font-semibold uppercase tracking-wide text-[12px] px-4 py-3 w-20">Kode</th>
+                    <th class="font-semibold uppercase tracking-wide text-[12px] px-4 py-3">Gejala</th>
+                    <th class="text-center font-semibold uppercase tracking-wide text-[12px] px-4 py-3 w-36">Nilai Kepastian</th>
                 </tr>
-            </table>
-        </div>
-        <?php
-        while ($row = mysqli_fetch_array($hasil)) {
-            // Mengambil nama gejala
-            $strsqlku2 = mysqli_query($con, "SELECT * FROM gejala WHERE kd_gejala='$row[kd_gejala]'");
-            while ($row2 = mysqli_fetch_array($strsqlku2)) {
-                echo "<div class='table-responsive'>";
-                echo "<table class='table table-hover table-sm table-bordered align='center'>";
-                echo "<tr>";
-                echo "<td width='5%'>$no</td>";
-                echo "<td width='7%'>$row2[kd_gejala]</td>";
-                echo "<td width='50%'>$row2[nama_gejala]</td>";
-                echo "<td width='50%'>Nilai Kepastian Gejala : $row[cf]</td>";
-                echo "</tr>";
-                echo "</table>";
-                echo "</div>";
+            </thead>
+            <tbody>
+                <?php
+                while ($row = mysqli_fetch_array($hasil)) {
+                    $strsqlku2 = mysqli_query($con, "SELECT * FROM gejala WHERE kd_gejala='$row[kd_gejala]'");
+                    while ($row2 = mysqli_fetch_array($strsqlku2)) {
+                        echo "<tr class='border-t border-line even:bg-mist/25'>";
+                        echo "<td class='px-4 py-3 text-center font-mono text-[13px] text-ink-soft'>$no</td>";
+                        echo "<td class='px-4 py-3 text-center font-mono text-[13px] font-semibold text-harbor'>$row2[kd_gejala]</td>";
+                        echo "<td class='px-4 py-3 text-[14.5px] text-ink'>$row2[nama_gejala]</td>";
+                        echo "<td class='px-4 py-3 text-center'><span class='inline-flex items-center justify-center min-w-[42px] rounded-full bg-harbor-tint px-2.5 py-1 font-mono text-[13px] font-semibold text-harbor-deep'>$row[cf]</span></td>";
+                        echo "</tr>";
+                        $no++;
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-                $no++;
-            }
-        }
-        echo "</tr>";
-
+<?php
         $g01 = mysqli_num_rows(mysqli_query($con, "SELECT * FROM konsultasi WHERE kd_gejala='G01' AND no_konsul='$no_konsul'"));
         $g02 = mysqli_num_rows(mysqli_query($con, "SELECT * FROM konsultasi WHERE kd_gejala='G02' AND no_konsul='$no_konsul'"));
         $g03 = mysqli_num_rows(mysqli_query($con, "SELECT * FROM konsultasi WHERE kd_gejala='G03' AND no_konsul='$no_konsul'"));
@@ -338,15 +343,23 @@ if ($h5 > 0 && $h6 > 0 && $h7 > 0) {
   $h2rule = $h5 + ($h6 * (1 - $h5));
   $h22rule = $h2rule + ($h7 * (1 - $h2rule));
   $h2akhir = $h22rule;
-}
-
-// Lanjutkan dengan kondisi yang lain
-else if ($h5 > 0 && $h6 > 0) {
+} else if ($h5 > 0 && $h6 > 0) {
   $h2rule = $h5 + ($h6 * (1 - $h5));
   $h2akhir = $h2rule;
 } else if ($h5 > 0 && $h7 > 0) {
   $h2rule = $h5 + ($h7 * (1 - $h5));
   $h2akhir = $h2rule;
+} else if ($h6 > 0 && $h7 > 0) {
+  $h2rule = $h6 + ($h7 * (1 - $h6));
+  $h2akhir = $h2rule;
+} else if ($h5 > 0) {
+  $h2akhir = $h5;
+} else if ($h6 > 0) {
+  $h2akhir = $h6;
+} else if ($h7 > 0) {
+  $h2akhir = $h7;
+} else {
+  $h2akhir = 0;
 }
 
 // K03 --> H8 3 proses
@@ -354,15 +367,23 @@ if ($h8 > 0 && $h9 > 0 && $h10 > 0) {
   $h3rule = $h8 + ($h9 * (1 - $h8));
   $h33rule = $h3rule + ($h10 * (1 - $h3rule));
   $h3akhir = $h33rule;
-}
-
-// Lanjutkan dengan kondisi yang lain
-else if ($h8 > 0 && $h9 > 0) {
+} else if ($h8 > 0 && $h9 > 0) {
   $h3rule = $h8 + ($h9 * (1 - $h8));
   $h3akhir = $h3rule;
 } else if ($h8 > 0 && $h10 > 0) {
   $h3rule = $h8 + ($h10 * (1 - $h8));
   $h3akhir = $h3rule;
+} else if ($h9 > 0 && $h10 > 0) {
+  $h3rule = $h9 + ($h10 * (1 - $h9));
+  $h3akhir = $h3rule;
+} else if ($h8 > 0) {
+  $h3akhir = $h8;
+} else if ($h9 > 0) {
+  $h3akhir = $h9;
+} else if ($h10 > 0) {
+  $h3akhir = $h10;
+} else {
+  $h3akhir = 0;
 }
 
 // K04 --> h11 3 proses
@@ -370,15 +391,23 @@ if ($h11 > 0 && $h12 > 0 && $h13 > 0) {
   $h4rule = $h11 + ($h12 * (1 - $h11));
   $h44rule = $h4rule + ($h13 * (1 - $h4rule));
   $h4akhir = $h44rule;
-}
-
-// Lanjutkan dengan kondisi yang lain
-else if ($h11 > 0 && $h12 > 0) {
+} else if ($h11 > 0 && $h12 > 0) {
   $h4rule = $h11 + ($h12 * (1 - $h11));
   $h4akhir = $h4rule;
 } else if ($h11 > 0 && $h13 > 0) {
   $h4rule = $h11 + ($h13 * (1 - $h11));
   $h4akhir = $h4rule;
+} else if ($h12 > 0 && $h13 > 0) {
+  $h4rule = $h12 + ($h13 * (1 - $h12));
+  $h4akhir = $h4rule;
+} else if ($h11 > 0) {
+  $h4akhir = $h11;
+} else if ($h12 > 0) {
+  $h4akhir = $h12;
+} else if ($h13 > 0) {
+  $h4akhir = $h13;
+} else {
+  $h4akhir = 0;
 }
 
 // Lanjutkan dengan penggabungan lainnya jika diperlukan
@@ -409,95 +438,71 @@ $htotal = max($h1hasilakhir, $h2hasilakhir, $h3hasilakhir, $h4hasilakhir);
 $htotalpersen = $htotal * 100;
 
 $hakhir = number_format($htotalpersen, 2, '.', '');
-echo "<table class='table table-hover table-sm table-bordered'>";
-echo "    <thead >";
-echo "  <tr id='thpokesimpulan'>";
-echo "    <th class='text-center'>KESIMPULAN</th>";
-echo "   </tr>";
-echo "   </thead>";
-echo "   <tbody class='bg-success'>";
-echo "  <tr>";
-echo "<td align='center'>";
-
-$sqlpen = mysqli_query($con, "select * from penyakit order by id_penyakit asc");
-$rpen = mysqli_fetch_array($sqlpen);
-$penanggulangan = $rpen['penanggulangan'];
-
-// Insert ke database
-// mysqli_query($koneksi, "insert into hasil_konsultasi (no_konsul,id_member,kd_penyakit,cf,waktu)values('$no_konsul','$idmember','K01','$h1akhirf',NOW())");
-// mysqli_query($koneksi, "insert into hasil_konsultasi (no_konsul,id_member,kd_penyakit,cf,waktu)values('$no_konsul','$idmember','K02','$h2akhirf',NOW())");
-// mysqli_query($koneksi, "insert into hasil_konsultasi (no_konsul,id_member,kd_penyakit,cf,waktu)values('$no_konsul','$idmember','K03','$h3akhirf',NOW())");
-// mysqli_query($koneksi, "insert into hasil_konsultasi (no_konsul,id_member,kd_penyakit,cf,waktu)values('$no_konsul','$idmember','K04','$h4akhirf',NOW())");
-
+// ----- Tentukan tingkat depresi & ambil keterangan -----
+$kd = ''; $namaTingkat = '';
+$accent = 'text-harbor'; $band = 'bg-harbor-tint';
 if ($htotal == 0) {
-    echo " Anda Tidak terindikasi ";
     mysqli_query($con, "insert into hasil_konsultasi (no_konsul,id_member,kd_penyakit,cf1,cf2,cf3,cf4,max,waktu)values('$no_konsul','$idmember','', '', '', '', '', '',NOW())");
 } else {
-    if ($htotal == $h1hasilakhir) {
-        echo " Kemungkinan Terindikasi Depresi Sandwich Generation Ringan : $hakhir %";
-        mysqli_query($con, "insert into hasil_konsultasi (no_konsul,id_member,kd_penyakit,cf1,cf2,cf3,cf4,max,waktu)values('$no_konsul','$idmember','K01', '$h1akhirf', '$h2akhirf', '$h3akhirf', '$h4akhirf', '$hakhir',NOW())");
-        echo "<br>";
-        echo "<br>";
-        $sqlpen = mysqli_query($con, "select * from penyakit where kd_penyakit='K01'");
-        $rpen = mysqli_fetch_array($sqlpen);
+    if ($htotal == $h1hasilakhir)     { $kd = 'K01'; $namaTingkat = 'Ringan'; $accent = 'text-harbor'; $band = 'bg-harbor-tint'; }
+    elseif ($htotal == $h2hasilakhir) { $kd = 'K02'; $namaTingkat = 'Sedang'; $accent = 'text-ember';  $band = 'bg-ember-tint'; }
+    elseif ($htotal == $h3hasilakhir) { $kd = 'K03'; $namaTingkat = 'Berat';  $accent = 'text-ember';  $band = 'bg-ember-tint'; }
+    if ($kd !== '') {
+        mysqli_query($con, "insert into hasil_konsultasi (no_konsul,id_member,kd_penyakit,cf1,cf2,cf3,cf4,max,waktu)values('$no_konsul','$idmember','$kd', '$h1akhirf', '$h2akhirf', '$h3akhirf', '$h4akhirf', '$hakhir',NOW())");
+        $rpen = mysqli_fetch_array(mysqli_query($con, "select * from penyakit where kd_penyakit='$kd'"));
         $ket = $rpen['keterangan'];
         $penanggulangan = $rpen['penanggulangan'];
-        echo "<br>";
-        echo "<br>";
-        echo "<p align='justify'>";
-        echo "$ket";
-        echo "</p>";
-        echo "<br>";
-        echo "Beberapa Penanggulangan yang dapat dilakukan :  $penanggulangan ";
-        echo "<br><br>";
-        echo "<a href='cetak.php?&no_konsul=$no_konsul' target='_blank'><button type='button' id='btn-cetak' class='btn'> CETAK</button></a>";
-    } elseif ($htotal == $h2hasilakhir) {
-        echo " Kemungkinan Anda Terindikasi Depresi Sandwich Generation Sedang  : $hakhir %";
-        mysqli_query($con, "insert into hasil_konsultasi (no_konsul,id_member,kd_penyakit,cf1,cf2,cf3,cf4,max,waktu)values('$no_konsul','$idmember','K02','$h1akhirf','$h2akhirf','$h3akhirf','$h4akhirf','$hakhir',NOW())");
-        $sqlpen = mysqli_query($con, "select * from penyakit where kd_penyakit='K02'");
-        $rpen = mysqli_fetch_array($sqlpen);
-        $ket = $rpen['keterangan'];
-        $penanggulangan = $rpen['penanggulangan'];
-        echo "<br>";
-        echo "<br>";
-        echo "<p align='justify'>";
-        echo "$ket";
-        echo "</p>";
-        echo "<br>";
-        echo "Beberapa Penanggulangan yang dapat dilakukan :  $penanggulangan ";
-        echo "<br><br>";
-        echo "<a href='cetak.php?&no_konsul=$no_konsul' target='_blank'><button type='button' id='btn-cetak' class='btn'> CETAK</button></a>";
-    } elseif ($htotal == $h3hasilakhir) {
-        echo " Kemungkinan Anda Terindikasi Depresi Sandwich Generation Berat : $hakhir %";
-        mysqli_query($con, "insert into hasil_konsultasi (no_konsul,id_member,kd_penyakit,cf1,cf2,cf3,cf4,max,waktu)values('$no_konsul','$idmember','K03','$h1akhirf','$h2akhirf','$h3akhirf','$h4akhirf','$hakhir',NOW())");
-        $sqlpen = mysqli_query($con, "select * from penyakit where kd_penyakit='K03'");
-        $rpen = mysqli_fetch_array($sqlpen);
-        $ket = $rpen['keterangan'];
-        $penanggulangan = $rpen['penanggulangan'];
-        echo "<br>";
-        echo "<br>";
-        echo "<p align='justify'>";
-        echo "$ket";
-        echo "</p>";
-        echo "<br>";
-        echo "Beberapa Penanggulangan yang dapat dilakukan :  $penanggulangan ";
-        echo "<br><br>";
-        echo "<a href='cetak.php?&no_konsul=$no_konsul' target='_blank'><button type='button' id='btn-cetak' class='btn'> CETAK</button></a>";
-    } 
+    }
 }
-echo "</td>";
-echo "</tr>";
-echo "</tbody>";
-echo "</table>";
-?>
-</div>
-<br>
-<p align="center"> <a class="btn btn-warning" data-toggle="collapse" href="#p2" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Detil Proses</a></p>
-<div class="collapse multi-collapse" id="p2">
-    <div class="card card-body">
-        <center style="font-family:GreyscaleBasic;font-weight:bold;"> <h3> Proses Rule <h3> </center>
 
-        <div id="isiadmin">
+if ($htotal == 0 || $kd === '') {
+    echo "<div class='rounded-2xl border border-line bg-mist/40 p-8 text-center'>
+            <span class='inline-flex w-14 h-14 rounded-full bg-harbor-tint items-center justify-center mb-4'><i data-lucide='shield-check' class='w-7 h-7 text-harbor'></i></span>
+            <h2 class='font-display text-[22px] font-semibold text-ink m-0 mb-2'>Tidak terindikasi</h2>
+            <p class='text-[15px] leading-relaxed text-ink-soft max-w-[520px] mx-auto m-0'>Dari jawaban Anda, sistem tidak menemukan indikasi Depresi Sandwich Generation. Tetap jaga kesehatan fisik dan mental Anda.</p>
+          </div>";
+} else {
+    $pct = (float) $hakhir;
+    echo "<div class='overflow-hidden rounded-2xl border border-line shadow-[0_16px_40px_rgba(15,27,39,0.08)]'>
+        <div class='$band px-7 pt-6 pb-7'>
+            <span class='eyebrow'>Kesimpulan</span>
+            <div class='flex flex-wrap items-end justify-between gap-4'>
+                <div>
+                    <span class='block font-mono text-[11px] uppercase tracking-[1.5px] text-ink-soft mb-2'>Depresi Sandwich Generation</span>
+                    <h2 class='font-display text-[30px] font-semibold text-ink m-0 leading-none'>Tingkat $namaTingkat</h2>
+                </div>
+                <div class='text-right'>
+                    <div class='font-mono text-[40px] font-semibold leading-none $accent'>$hakhir<span class='text-[22px]'>%</span></div>
+                    <span class='font-mono text-[11px] uppercase tracking-[1.5px] text-ink-soft'>Tingkat Kepastian</span>
+                </div>
+            </div>
+            <div class='relative mt-5'>
+                <div class='cf-scale'></div>
+                <div class='absolute -top-[4px] w-[3px] h-[15px] bg-ink rounded-full shadow-[0_0_0_2px_white]' style='left:$pct%;'></div>
+            </div>
+            <div class='cf-legend'><span>&minus;1 &middot; tidak yakin</span><span>yakin &middot; +1</span></div>
+        </div>
+        <div class='p-7'>
+            <p class='text-[15.5px] leading-relaxed text-ink-soft m-0 mb-5' align='justify'>$ket</p>
+            <div class='rounded-xl border border-line bg-mist/40 p-5 mb-6'>
+                <p class='font-display text-[14px] font-semibold text-ink m-0 mb-2 flex items-center gap-2'><i data-lucide='sparkles' class='w-[18px] h-[18px] text-ember'></i> Yang dapat Anda lakukan</p>
+                <p class='text-[14.5px] leading-relaxed text-ink-soft m-0'>$penanggulangan</p>
+            </div>
+            <a href='cetak.php?&no_konsul=$no_konsul' target='_blank' class='inline-flex items-center gap-2.5 bg-harbor hover:bg-harbor-deep text-white font-display font-semibold text-[15px] rounded-xl px-6 py-3.5 shadow-[0_8px_20px_rgba(53,97,140,0.28)] transition-colors'><i data-lucide='printer' class='w-5 h-5'></i> Cetak Hasil</a>
+        </div>
+    </div>";
+}
+?>
+<div class="flex justify-center mt-7 mb-2">
+    <a class="inline-flex items-center gap-2.5 bg-white border border-line text-ink-soft font-display font-semibold text-[14.5px] rounded-xl px-6 py-3 hover:bg-mist transition-colors" data-toggle="collapse" href="#p2" role="button" aria-expanded="false">
+        <i data-lucide="function-square" class="w-[18px] h-[18px] text-harbor"></i> Lihat Detil Proses Perhitungan
+    </a>
+</div>
+<div class="collapse multi-collapse" id="p2">
+    <div class="rounded-2xl border border-line bg-mist/30 p-6 mt-3">
+        <h3 class="font-display text-[15px] font-semibold text-ink m-0 mb-3 flex items-center gap-2"><i data-lucide="binary" class="w-[18px] h-[18px] text-harbor"></i> Proses Rule</h3>
+
+        <div class="proc-panel">
             <p align='justify'>
                 <?php
                 //TOMBOL DEIL PROSES!!!!!!!!!!!!!
@@ -672,8 +677,8 @@ if (($g13 > 0) && ($g14 > 0)) {
 </p>
 </div>
 
- <center  style="font-family:GreyscaleBasic;font-weight:bold;"> <h3> Penggabungan Fakta Baru <h3> </center>
-<div id="isiadmin">
+<h3 class="font-display text-[15px] font-semibold text-ink mt-6 mb-3 flex items-center gap-2"><i data-lucide="git-merge" class="w-[18px] h-[18px] text-harbor"></i> Penggabungan Fakta Baru</h3>
+<div class="proc-panel">
 <?php
 
 echo"<br>";
@@ -898,8 +903,8 @@ echo"</p>";
 echo "<br>";
 echo"</div>";
 //menampilkan fakta baru di akhir
-echo"<center  style='font-family:GreyscaleBasic;font-weight:bold;'> <h3> Fakta Baru Akhir<h3> </center>";
-echo"<div id='isiadmin'>";
+echo"<h3 class='font-display text-[15px] font-semibold text-ink mt-6 mb-3 flex items-center gap-2'><i data-lucide='flag-triangle-right' class='w-[18px] h-[18px] text-harbor'></i> Fakta Baru Akhir</h3>";
+echo"<div class='proc-panel'>";
 if(($h1akhir>0)&&($h2akhir>0)&&($h3akhir>0)&&($h4akhir>0)){
 echo"<p align='left'>";
 echo"1. Depresi Sandwich Generation Ringan = $h1akhirf <br>";
@@ -1018,6 +1023,12 @@ echo"</p>";
 
 </div>
 </div>
-<p style="color:red">Note : Untuk mengetahui lebih lanjut mengenai hasil diagnosa yang telah anda lakukan, Silahkan hubungi psikolog atau dokter kejiwaan terpercaya.</p>
+<div class="flex items-start gap-3.5 rounded-2xl border border-ember/30 bg-ember-tint/40 p-5 mt-8">
+    <span class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-ember-tint"><i data-lucide="heart-pulse" class="w-5 h-5 text-ember"></i></span>
+    <div>
+        <p class="font-display text-[14px] font-semibold text-ink m-0 mb-1">Hasil ini bukan diagnosis akhir</p>
+        <p class="text-[14px] leading-relaxed text-ink-soft m-0">Untuk memahami lebih lanjut hasil diagnosa Anda, silakan hubungi psikolog atau dokter kejiwaan terpercaya.</p>
+    </div>
+</div>
 
 

@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - DB_HOST=db
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.4
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=cf_depresi
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./cf_depresi.sql:/docker-entrypoint-initdb.d/cf_depresi.sql
+    ports:
+      - "3307:3306"
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:

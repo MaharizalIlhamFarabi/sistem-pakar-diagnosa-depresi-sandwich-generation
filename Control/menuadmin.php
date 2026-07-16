@@ -6,27 +6,27 @@ $rc = mysqli_num_rows($sqlc);
 ?>
 
 <ul class="nav nav-stacked nav-pills" id="navpo">
-    <li class="nav-item <?php echo $_GET['r'] == 'home' ? 'active' : ''; ?>">
+    <li class="nav-item <?php echo (empty($_GET['r']) || $_GET['r'] == 'home') ? 'active' : ''; ?>">
         <a class="nav-link" href="?r=home"><i class="glyphicon glyphicon-home"></i> Home</a>
     </li>
 
-    <li class="nav-item <?php echo $_GET['r'] == 'kerusakan' ? 'active' : ''; ?>">
+    <li class="nav-item <?php echo ($_GET['r'] ?? '') == 'kerusakan' ? 'active' : ''; ?>">
         <a class="nav-link" href="?r=kerusakan"><i class="glyphicon glyphicon-folder-close"></i> Daftar Depresi</a>
     </li>
 
-    <li class="nav-item <?php echo $_GET['r'] == 'gejala' ? 'active' : ''; ?>">
+    <li class="nav-item <?php echo ($_GET['r'] ?? '') == 'gejala' ? 'active' : ''; ?>">
         <a class="nav-link" href="?r=gejala"><i class="glyphicon glyphicon-folder-close"></i> Daftar Gejala</a>
     </li>
 
-    <li class="nav-item <?php echo $_GET['r'] == 'daftarmember' ? 'active' : ''; ?>">
+    <li class="nav-item <?php echo ($_GET['r'] ?? '') == 'daftarmember' ? 'active' : ''; ?>">
         <a class="nav-link" href="?r=daftarmember"><i class="glyphicon glyphicon-user"></i> Daftar User</a>
     </li>
 
-    <li class="nav-item <?php echo $_GET['r'] == 'hasilkonsultasi' ? 'active' : ''; ?>">
+    <li class="nav-item <?php echo ($_GET['r'] ?? '') == 'hasilkonsultasi' ? 'active' : ''; ?>">
         <a class="nav-link" href="?r=hasilkonsultasi"><i class="glyphicon glyphicon-ok"></i> Hasil Konsultasi</a>
     </li>
 
-    <li class="nav-item <?php echo $_GET['r'] == 'pesan' ? 'active' : ''; ?>">
+    <li class="nav-item <?php echo ($_GET['r'] ?? '') == 'pesan' ? 'active' : ''; ?>">
         <a class="nav-link" href="?r=pesan">
             <i class="glyphicon glyphicon-inbox"></i> Pesan
             <span class="badge"><?php echo $rc; ?></span>

@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Default voice is the warm serif — the human/knowledge register */
+  body { @apply font-body text-ink m-0; }
+
+  a:focus, button:focus, input:focus, select:focus, textarea:focus, .btn:focus, .btn.focus {
+    outline: none;
+  }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .btn:focus-visible {
+    @apply outline-none ring-[3px] ring-harbor-tint rounded;
+  }
+  .rounded-full:focus-visible {
+    border-radius: 9999px !important;
+  }
+}
+
+@layer components {
+  /* Eyebrow label — the mono kicker above every page heading */
+  .eyebrow {
+    @apply block font-mono text-[16px] font-semibold tracking-[2px] uppercase text-harbor mb-3;
+  }
+
+  /* Computation trace panel — the CF math is data, so it reads in mono */
+  .proc-panel {
+    @apply rounded-xl border border-line bg-white p-4 mb-2 font-mono text-[12.5px] leading-[1.7] text-ink-soft overflow-x-auto;
+  }
+  .proc-panel p { @apply m-0; }
+
+  /* Content card — reused across every module page via id="isiadmin" */
+  #isiadmin {
+    @apply max-w-[880px] mx-auto relative block p-9 px-10 bg-white border border-line rounded-2xl shadow-[0_10px_30px_rgba(15,27,39,0.06)] box-border;
+  }
+
+  /* Sidebar nav — the system's voice, so it speaks in the grotesque */
+  #navpo {
+    @apply flex flex-col gap-1 p-2.5 m-0 bg-white border border-line rounded-2xl shadow-[0_8px_24px_rgba(15,27,39,0.05)];
+  }
+  #navpo > li { @apply m-0; }
+  #navpo > li > a {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-ink font-display font-medium text-[14.5px] tracking-tight transition-colors;
+  }
+  #navpo > li > a:hover { @apply bg-harbor-tint text-harbor-deep; }
+  #navpo > li.active > a,
+  #navpo > li.active > a:hover,
+  #navpo > li.active > a:focus {
+    @apply text-white bg-harbor;
+  }
+
+  /* Lucide icons — inherit currentColor so they always match their label */
+  .lucide { @apply inline-block align-[-3px] shrink-0; }
+
+  /* Header user dropdown menu — id selector needed to out-rank Bootstrap's .dropdown-menu>li>a */
+  #ul-memberkananatas > li > a {
+    @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13.5px] font-display text-ink no-underline whitespace-nowrap transition-colors;
+  }
+  #ul-memberkananatas > li > a:hover { @apply bg-harbor-tint text-harbor-deep; }
+  /* Icon chip inside each dropdown item */
+  #ul-memberkananatas .dd-ic {
+    @apply w-7 h-7 rounded-md bg-harbor-tint flex items-center justify-center shrink-0;
+  }
+  #ul-memberkananatas .dd-ic--warn { @apply bg-ember-tint; }
+  /* Logout — the one destructive action, set apart in the warm voice */
+  #ul-memberkananatas > li > a.dd-logout { @apply text-ember; }
+  #ul-memberkananatas > li > a.dd-logout:hover { @apply bg-ember-tint text-ember; }
+
+  /* Header user dropdown toggle */
+  #a-memberkananatas {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    text-decoration: none !important;
+  }
+  #a-memberkananatas:hover,
+  #a-memberkananatas:focus,
+  #a-memberkananatas:active,
+  .open > #a-memberkananatas {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    text-decoration: none !important;
+  }
+
+  /* Buttons — actions are the system speaking, so grotesque + quiet denim */
+  .btn-info {
+    @apply bg-harbor border-harbor text-white rounded-lg font-display font-semibold tracking-tight shadow-none;
+  }
+  .btn-info:hover { @apply bg-harbor-deep border-harbor-deep text-white; }
+  .btn-success { @apply bg-harbor border-harbor text-white rounded-lg font-display font-semibold; }
+  .btn-danger, .btn-dangerpesan { @apply bg-ember border-ember text-white rounded-lg font-display font-semibold; }
+
+  /* Form controls — utility register, so grotesque for legibility at small sizes */
+  input[type="text"], input[type="password"], input[type="number"], input[type="file"],
+  select, textarea, .form-control {
+    @apply border border-line bg-mist/50 rounded-lg font-display text-ink;
+  }
+  .form-control:focus { @apply border-harbor bg-white; }
+
+  /* Table headers */
+  #thpo { @apply text-center bg-harbor text-white p-2.5 font-display; }
+  #thpokesimpulan { @apply text-center bg-ember-tint text-ink p-2.5 font-display font-semibold; }
+
+  /* ---- Signature: the Certainty Factor scale ------------------------------
+     The system is named for the Certainty Factor method — belief measured on a
+     scale from doubt to conviction. That scale is the page's structural motif:
+     a measured rule that runs cool (haze, uncertain) → denim → honey (certain),
+     notched like a gauge. It replaces decorative dividers everywhere. */
+  .cf-scale {
+    @apply relative w-full h-[7px] rounded-full overflow-hidden;
+    background: linear-gradient(90deg, theme(colors.haze) 0%, theme(colors.harbor) 48%, theme(colors.ember) 100%);
+  }
+  .cf-scale::after {
+    content: "";
+    @apply absolute inset-0;
+    /* Gauge ticks — hairlines every 22px, reading as a measured instrument */
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0 1px, transparent 1px 22px);
+  }
+  .cf-scale--thin { @apply h-[4px]; }
+
+  /* Endpoint labels for the hero scale — the literal CF range, set in mono */
+  .cf-legend {
+    @apply flex items-center justify-between font-mono text-[10.5px] uppercase tracking-[1.5px] text-ink-soft mt-2;
+  }
+}

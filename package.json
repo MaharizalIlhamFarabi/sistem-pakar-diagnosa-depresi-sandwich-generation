@@ -1,0 +1,26 @@
+{
+  "name": "sistem-pakar-diagnosa-depresi-sandwich-generation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./src/tailwind.css -o ./css/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./src/tailwind.css -o ./css/tailwind.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaharizalIlhamFarabi/sistem-pakar-diagnosa-depresi-sandwich-generation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MaharizalIlhamFarabi/sistem-pakar-diagnosa-depresi-sandwich-generation/issues"
+  },
+  "homepage": "https://github.com/MaharizalIlhamFarabi/sistem-pakar-diagnosa-depresi-sandwich-generation#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

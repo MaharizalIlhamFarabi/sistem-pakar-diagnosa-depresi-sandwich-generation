@@ -1,7 +1,7 @@
 <?php
 include "koneksi.php";
 
-$mysqli = new mysqli("localhost", "root", "", "cf_depresi");
+$mysqli = new mysqli(getenv("DB_HOST") ?: "localhost", "root", "", "cf_depresi");
 
 if ($mysqli->connect_error) {
     die("Koneksi database gagal: " . $mysqli->connect_error);
