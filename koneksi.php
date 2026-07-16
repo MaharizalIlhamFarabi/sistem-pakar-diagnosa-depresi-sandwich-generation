@@ -1,5 +1,5 @@
 <?php
-$host   = "localhost";
+$host   = getenv("DB_HOST") ?: "localhost";
 $user   = "root";
 $pass   = "";
 $db     = "cf_depresi";

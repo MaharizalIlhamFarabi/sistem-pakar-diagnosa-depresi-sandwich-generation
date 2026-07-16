@@ -1,6 +1,6 @@
 <?php
 include "koneksi.php";
-$mysqli = new mysqli("localhost", "root", "", "cf_depresi"); // Definisikan koneksi ke database di sini
+$mysqli = new mysqli(getenv("DB_HOST") ?: "localhost", "root", "", "cf_depresi"); // host dari env agar jalan di Docker & lokal
 
 if (isset($_POST["edit"])) {
     $bulan = $_POST['bln'];
@@ -65,36 +65,46 @@ if ($stmt) {
 }
 ?>
 
-<form name="form1" method="post" action="" enctype="multipart/form-data">
-    <center><h4 class="modal-title">Edit Data : <?php echo $_SESSION['usermbr'] ?></h4></center>
-    <input type="hidden" name="id_member" value="<?php echo $rm["id_member"]; ?>">
-    <div class="form-group">
-        <label>Username</label>
-        <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input type="text" class="form-control" name="username" value="<?php echo $rm["username"]; ?>">
-        </div>
-    </div>
+<div>
+    <span class="eyebrow">Edit Profil</span>
+    <h1 class="font-display text-[28px] font-semibold text-ink mt-0 mb-4 leading-[1.2] tracking-tight">Ubah data diri Anda</h1>
+    <div class="cf-scale"></div>
+</div>
 
-    <div class="form-group">
-        <label>Password</label>
-        <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input type="text" class="form-control" name="password" value="<?php echo $rm["password"]; ?>">
+<form name="form1" method="post" action="" enctype="multipart/form-data" class="mt-7">
+    <input type="hidden" name="id_member" value="<?php echo $rm["id_member"]; ?>">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+            <label class="block font-display text-[13.5px] font-semibold text-ink mb-1.5">Username</label>
+            <div class="relative">
+                <i data-lucide="user" class="w-[18px] h-[18px] text-harbor absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" class="form-control w-full pl-11 pr-4 py-3 text-[15px] rounded-lg" name="username" value="<?php echo $rm["username"]; ?>">
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Nama Lengkap</label>
-        <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-            <input type="text" class="form-control" name="nama" value="<?php echo $rm["nama"]; ?>">
+
+        <div>
+            <label class="block font-display text-[13.5px] font-semibold text-ink mb-1.5">Password</label>
+            <div class="relative">
+                <i data-lucide="lock" class="w-[18px] h-[18px] text-harbor absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" class="form-control w-full pl-11 pr-4 py-3 text-[15px] rounded-lg" name="password" value="<?php echo $rm["password"]; ?>">
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Alamat</label>
-        <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
-            <textarea type="text" class="form-control" name="alamat"><?php echo $rm["alamat"]; ?></textarea>
+
+        <div class="md:col-span-2">
+            <label class="block font-display text-[13.5px] font-semibold text-ink mb-1.5">Nama Lengkap</label>
+            <div class="relative">
+                <i data-lucide="pencil" class="w-[18px] h-[18px] text-harbor absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" class="form-control w-full pl-11 pr-4 py-3 text-[15px] rounded-lg" name="nama" value="<?php echo $rm["nama"]; ?>">
+            </div>
+        </div>
+
+        <div class="md:col-span-2">
+            <label class="block font-display text-[13.5px] font-semibold text-ink mb-1.5">Alamat</label>
+            <div class="relative">
+                <i data-lucide="map-pin" class="w-[18px] h-[18px] text-harbor absolute left-3.5 top-3.5"></i>
+                <textarea class="form-control w-full pl-11 pr-4 py-3 text-[15px] rounded-lg min-h-[90px]" name="alamat"><?php echo $rm["alamat"]; ?></textarea>
+            </div>
         </div>
     </div>
 
@@ -110,78 +120,63 @@ if ($stmt) {
         $w = "";
     }
     ?>
-    <p>JENIS KELAMIN <br>
-        <input name="jk" type="radio" value="pria" <?php echo $p; ?>>
-        Pria
-        <input name="jk" type="radio" value="wanita" <?php echo $w; ?>>
-        Wanita
-    </p>
-    <p>
-        <label>Tanggal Lahir</label><br>
-        <select name="tgl" size="1" class="selecttgl">
-            <?php
+    <div class="mt-5">
+        <label class="block font-display text-[13.5px] font-semibold text-ink mb-2">Jenis Kelamin</label>
+        <div class="flex gap-3">
+            <label class="flex items-center gap-2.5 rounded-lg border border-line bg-mist/40 px-4 py-2.5 cursor-pointer hover:border-harbor/50">
+                <input name="jk" type="radio" value="pria" <?php echo $p; ?> class="accent-harbor w-4 h-4">
+                <span class="text-[14.5px] text-ink">Pria</span>
+            </label>
+            <label class="flex items-center gap-2.5 rounded-lg border border-line bg-mist/40 px-4 py-2.5 cursor-pointer hover:border-harbor/50">
+                <input name="jk" type="radio" value="wanita" <?php echo $w; ?> class="accent-harbor w-4 h-4">
+                <span class="text-[14.5px] text-ink">Wanita</span>
+            </label>
+        </div>
+    </div>
 
-            for ($j = 1; $j <= 31; $j++) {
-                if ($j < 10) {
-                    $j_disp = '0' . $j;
-                } else {
-                    $j_disp = $j;
+    <div class="mt-5">
+        <label class="block font-display text-[13.5px] font-semibold text-ink mb-2">Tanggal Lahir</label>
+        <div class="flex flex-wrap gap-3">
+            <select name="tgl" class="form-control px-3 py-3 text-[15px] rounded-lg cursor-pointer">
+                <?php
+                for ($j = 1; $j <= 31; $j++) {
+                    $j_disp = $j < 10 ? '0' . $j : $j;
+                    $sel = ($tgl == $j_disp) ? " selected" : "";
+                    echo "<option value='$j_disp' $sel>$j</option>";
                 }
+                ?>
+            </select>
+            <select name="bln" class="form-control px-3 py-3 text-[15px] rounded-lg cursor-pointer">
+                <?php
+                $bulans = array(
+                    '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
+                    '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
+                    '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
+                );
+                foreach ($bulans as $key => $value) {
+                    $sel = ($bln == $key) ? " selected" : "";
+                    echo "<option value='$key' $sel>$value</option>";
+                }
+                ?>
+            </select>
+            <select name="thn" class="form-control px-3 py-3 text-[15px] rounded-lg cursor-pointer">
+                <?php
+                $now = date('Y');
+                for ($i = 1900; $i <= $now; $i++) {
+                    $sel = ($thn == $i) ? " selected " : "";
+                    echo "<option value='$i'$sel>$i</option>";
+                }
+                ?>
+            </select>
+        </div>
+    </div>
 
-                if ($tgl == $j_disp) {
-                    $sel = " selected";
-                } else {
-                    $sel = "";
-                }
-
-                echo "<option value='$j_disp' $sel>$j</option>";
-            }
-            ?>
-        </select>
-        <select name="bln" size="1" class="selecttgl">
-            <?php
-            $bulans = array(
-                '01' => 'Januari',
-                '02' => 'Februari',
-                '03' => 'Maret',
-                '04' => 'April',
-                '05' => 'Mei',
-                '06' => 'Juni',
-                '07' => 'Juli',
-                '08' => 'Agustus',
-                '09' => 'September',
-                '10' => 'Oktober',
-                '11' => 'November',
-                '12' => 'Desember'
-            );
-
-            foreach ($bulans as $key => $value) {
-                if ($bln == $key) {
-                    $sel = " selected";
-                } else {
-                    $sel = "";
-                }
-                echo "<option value='$key' $sel>$value</option>";
-            }
-            ?>
-        </select>
-        <select name="thn" size="1" class="selecttgl">
-            <?php
-            $now = date('Y');
-            for ($i = 1900; $i <= $now; $i++) {
-                if ($thn == $i) {
-                    $sel = " selected ";
-                } else {
-                    $sel = "";
-                }
-                echo "<option value='$i'$sel>$i</option>";
-            }
-            ?>
-        </select>
-    </p>
-    <p>
-        <input name="edit" type="submit" class="btn btn-success " value="Ubah Data ">
-        <a href='?r=member&idm=<?php echo $rm["id_member"]; ?>' class='btn btn-danger '>Batal</a>
-    </p>
+    <div class="flex items-center gap-3 mt-8">
+        <button name="edit" type="submit" class="inline-flex items-center gap-2.5 bg-harbor hover:bg-harbor-deep text-white font-display font-semibold text-base rounded-xl px-7 py-3.5 shadow-[0_8px_20px_rgba(53,97,140,0.28)] transition-colors">
+            <i data-lucide="save" class="w-5 h-5"></i> Ubah Data
+        </button>
+        <a href='?r=homemember' class='inline-flex items-center gap-2.5 bg-white border border-line text-ink-soft font-display font-semibold text-base rounded-xl px-6 py-3.5 hover:bg-mist transition-colors'>
+            <i data-lucide="x" class="w-5 h-5"></i> Batal
+        </a>
+    </div>
 </form>
-<br>

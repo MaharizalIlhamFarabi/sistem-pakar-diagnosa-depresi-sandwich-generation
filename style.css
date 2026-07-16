@@ -10,7 +10,7 @@
 #btn-cetak{
     color: #fff;
     background-color: #999999;
-  
+
 }
 
 .btn-group-vertical>.btn, .btn-group>.btn {
@@ -18,36 +18,6 @@
     position: relative;
     float: left;
 
-}
-
-.btn-info{
-    color: #fff;
-    background-color: #0099cc;
-    border-color: #46b8da;
-}
-.btn-info:hover{
-    color: #fff;
-    background-color: #999;
-    border-color: #46b8da;
-}
-.btn-success {
-    color:#fff;
-    background-color:#009933;
-    border-color:#2e6da4;
-    padding-right: 30px;
-	  padding-left: 30px;
-    text-align:center;
-}
-.btn-danger {
-    color: #fff;
-    background-color: #CC0000;
-    border-color: #d43f3a;
-      padding: 9px;
-}
-.btn-dangerpesan {
-    color: #fff;
-    background-color: #CC0000;
-    border-color: #d43f3a;
 }
 
 /*DROPDOWN  */
@@ -81,13 +51,6 @@
 #containerlogintop{background-color:#00cccc;height:50px; border-radius:6px; }
 #containerloginbot{background-color:#00cccc;height:50px; border-radius:6px;padding:10px; }
 
-.container1{ height:220px; box-shadow:0 0 90px #323130; 	overflow-x:hidden; }
-.container1f{ height:180px; box-shadow:0 0 90px #323130;     overflow-x:hidden; }
-.container2{background-color:#ccc; height:80px; box-shadow:0 0 90px #cccccc; 	overflow-x:hidden; }
-
-.backgroundall{background-image:url(images/05.jpg);
-
-}
 /*UNTUK TAMPILAN LAYAR */
 #bodyloginadmin{
 	font-family:Arial;
@@ -96,17 +59,6 @@
 	background-image:url(images/blackwhite.jpg);
 	background-repeat:no-repeat;
 	background-attachment:fixed;
-}
-
-#isiadmin{
-
-	max-width:100%;
-	margin:5px auto;
-	position:relative;
-	display:block;
-	padding:10px;
-	background-color:#ffffff;
-	box-shadow:0 0 5px #aaa;
 }
 
 #view{
@@ -143,12 +95,6 @@ fieldset{
 }
 
 
-.grid{
-	width:100%;
-	padding:0px;
-	overflow:hidden;
-}
-
 .dh1 { width:6.25%; }
 .dh2 { width:14.58%; }
 .dh3 { width:22.91%; }
@@ -182,69 +128,7 @@ padding:0px 0px;
 }
 
 
-/*PERUBAHAN PADA NAV */
-.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-    color: pink;
-    background-color: #09C;
-}
-
-.navbar-nav>li>a {
-    padding-top: 15px;
-    padding-bottom: 22px;
-}
-
-#navpo {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-    background-color: #999999;
-	border-radius:6px;
-}
-
-
-
-/* PERUBAHAN PADA FORM */
-
-input[type="text"],
-input[type="password"],
-input[type="file"],
-select, textarea {
-	width:100%;
-	padding:0.8em;
-	margin-top:1em;
-	height: inherit;
-	border:1px solid #999999;
-	background-color:#E9E9E9;
-	font-family:"Arial";
-	color:#333333;
-}
-
-textarea.form-control {
-    height: auto;
-    background-color:#E9E9E9;
-    border: 1px solid #999999;
-}
-.form-control {
-    border: 1px solid #999999;
-    background-color: #E9E9E9 !important;
-
-}
-.input-group .form-control {
-    position: relative;
-    z-index: 2;
-    float: left;
-    width: -webkit-fill-available;
-    margin-bottom: 0;
-    margin-top: 0;
-}
-
-#textareapesan.form-control {
-    height: auto;
-    height: 220px;
-    background-color: #E9E9E9;
-    border: 1px solid #999999;
-}
-
+/* PERUBAHAN PADA FORM (fallback untuk halaman yang belum migrasi ke Tailwind) */
 
 .selecttgl {
   border-radius: 4px;
@@ -271,29 +155,9 @@ textarea.form-control {
 
 
 /*PERUBAHAAN PADA TABEL */
-#thpokesimpulan{
-	text-align:center;
-    background-color:
-    #ec971f;
-    border-color:
-    #d58512;
-	 padding: 10px;
-	color:#000000;
-	font-family:Arial;
-
-}
-#thpo{
-	text-align:center;
-	background-color:#09C;
-	 padding: 10px;
-	color:#ffffff;
-	font-family:Arial;
-
-}
-
 #thwarning{
 	text-align:center;
-	
+
 	 padding: 10px;
 	color:#CC0000;
 	font-family:Arial;
@@ -305,10 +169,8 @@ td{
 color:#666666;}
 
 /*DESIGN LAINNYA (WARNA, tulisan,  BATAS ATAS DLL)  */
-#akananatas  {
-    color: #000000 !important;
-    text-decoration: none;
-}
+/* #akananatas: aturan warna !important lama dihapus — styling item dropdown
+   kini ditangani di src/tailwind.css (#ul-memberkananatas > li > a). */
 
 #ulkananatas{
 background-color:#666666;}
@@ -337,13 +199,5 @@ color: #000;
 
 
 a {
-    color: #ffffff !important;
     text-decoration: none;
-
-}
-
-a:hover {
-    color: #000000 !important;
-    text-decoration: none;
-
 }
